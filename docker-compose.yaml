@@ -1,0 +1,33 @@
+version: '3.5'
+
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: esatcoban
+      POSTGRES_PASSWORD: 108108108
+      POSTGRES_DB: InvestingModel
+      PGDATA: /data/postgres
+    volumes:
+       - postgres_investing:/data/postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: pgadmin_container3
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+        - pgadmin:/root/.pgadmin
+    ports:
+      - "${PGADMIN_PORT:-5052}:80"
+    restart: unless-stopped
+  
+
+
+volumes:
+    postgres_investing:
+    pgadmin:
