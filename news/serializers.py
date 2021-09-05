@@ -1,57 +1,23 @@
 from rest_framework import serializers
-from news.models import NewsModel, CategoryModel
+from news.models import NewsModel, CategoryModel, CommentModel
 
 
 
-class NewsCreateSerializer(serializers.ModelSerializer):
+class NewsSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewsModel
-        fields = ['title', 'content', 'category']
+        fields = ['slug', 'user', 'title', 'content', 'category']
 
 
 
-class NewsUpdateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = NewsModel
-        fields = ['title', 'content']
-
-
-
-class NewsListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = NewsModel
-        fields = ['slug', 'title', 'content', 'category']
-
-
-
-class NewsDeleteSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = NewsModel
-        fields = ['title', 'content']
-
-
-
-class CategoryCreateSerializer(serializers.ModelSerializer):
+class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = CategoryModel
         fields = ['slug', 'title']
 
 
 
-class CategoryUpdateSerializer(serializers.ModelSerializer):
+class CommentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CategoryModel
-        fields = ['slug', 'title']
-
-
-class CategoryListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CategoryModel
-        fields = ['slug', 'title']
-
-
-    
-class CategoryDeleteSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CategoryModel
-        fields = ['slug', 'title']
+        model = CommentModel
+        fields = ['comment', 'user', 'content']
