@@ -48,6 +48,7 @@ class CommentModel(models.Model):
     comment = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='commentuser')
     content = models.ForeignKey(NewsModel, on_delete=models.CASCADE, related_name='commentcontent')        
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='replies')
     created_time = models.DateTimeField(auto_now_add = True)
     updated_time = models.DateTimeField(auto_now = True)
 
@@ -57,4 +58,11 @@ class CommentModel(models.Model):
         verbose_name_plural = 'Comments'
 
     def __str__(self):
-        return self.user.username
+        return self.content.title + " " + self.user.username
+
+    def child(self):
+        return CommentModel.objects.filter(parent=self)
+
+    @property
+    def any_child(self):
+        return CommentModel.objects.filter(parent=self).exists()

@@ -6,10 +6,10 @@ services:
     environment:
       POSTGRES_USER: esatcoban
       POSTGRES_PASSWORD: 108108108
-      POSTGRES_DB: InvestingModel
+      POSTGRES_DB: InvestingModel2
       PGDATA: /data/postgres
     volumes:
-       - postgres_investing:/data/postgres
+       - postgres_investing2:/data/postgres
     ports:
       - "5432:5432"
     restart: unless-stopped
@@ -29,5 +29,5 @@ services:
 
 
 volumes:
-    postgres_investing:
+    postgres_investing2:
     pgadmin:

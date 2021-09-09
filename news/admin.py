@@ -16,4 +16,4 @@ class NewsAdmin(admin.ModelAdmin):
 
 @admin.register(CommentModel)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('content', 'user', 'created_time', 'updated_time')
+    list_display = ('content', 'parent', 'user', 'created_time', 'updated_time')

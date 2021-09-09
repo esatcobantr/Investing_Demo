@@ -60,6 +60,7 @@ class CommentCreateView(CreateAPIView):
     serializer_class = CommentSerializer
 
 
+
 class CommentUpdateView(UpdateAPIView):
     queryset = CommentModel.objects.all()
     serializer_class = CommentSerializer
