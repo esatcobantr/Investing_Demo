@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 class CategoryModel(models.Model):
     title = models.CharField(max_length = 30, blank = False, null = False)
     slug = AutoSlugField(populate_from = 'title', null = True, unique = True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, editable = False, null = True, blank=True, related_name='categoryuser')
 
     class Meta:
         db_table = 'Category'
@@ -28,7 +29,8 @@ class NewsModel(models.Model):
     updated_time = models.DateTimeField(auto_now = True)
     slug = AutoSlugField(populate_from = 'title', null = True, unique = True)
     category = models.ManyToManyField(CategoryModel, related_name = 'newscategory')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='newsuser')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, editable = False, related_name='newsuser')
+    image = models.ImageField(upload_to='media/news/', null = True)
 
     class Meta:
         db_table = 'News'
@@ -46,7 +48,7 @@ class NewsModel(models.Model):
 
 class CommentModel(models.Model):
     comment = models.TextField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='commentuser')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, editable = False,  related_name='commentuser')
     content = models.ForeignKey(NewsModel, on_delete=models.CASCADE, related_name='commentcontent')        
     parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='replies')
     created_time = models.DateTimeField(auto_now_add = True)

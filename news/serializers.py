@@ -6,21 +6,21 @@ from news.models import CategoryModel, NewsModel, CommentModel
 class NewsSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewsModel
-        fields = ['slug', 'user', 'title', 'content', 'category']
+        fields = ['user', 'slug', 'title', 'content', 'category', 'image']
 
 
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = CategoryModel
-        fields = ['slug', 'title']
+        fields = ['user', 'slug', 'title']
 
 
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = CommentModel
-        fields = ['comment', 'user', 'content', 'parent']
+        fields = ['id', 'user', 'comment', 'content', 'parent']
 
     def validate(self, attrs):
         if(attrs['parent']):
