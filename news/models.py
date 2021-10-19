@@ -30,7 +30,7 @@ class NewsModel(models.Model):
     slug = AutoSlugField(populate_from = 'title', null = True, unique = True)
     category = models.ManyToManyField(CategoryModel, related_name = 'newscategory')
     user = models.ForeignKey(User, on_delete=models.CASCADE, editable = False, related_name='newsuser')
-    image = models.ImageField(upload_to='media/news/', null = True)
+    image = models.ImageField(upload_to='news', null = True)
 
     class Meta:
         db_table = 'News'

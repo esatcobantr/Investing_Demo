@@ -1,8 +1,9 @@
 from news.models import NewsModel, CategoryModel, CommentModel
-from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView, ListAPIView, DestroyAPIView
+from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView, ListAPIView, RetrieveDestroyAPIView
 from news.serializers import NewsSerializer, CategorySerializer, CommentSerializer
 from rest_framework.permissions import IsAuthenticated
 from news.permissions import IsSuperOrAuthorUser, IsSuperUser
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 
 class NewsCreateView(CreateAPIView):
@@ -25,10 +26,12 @@ class NewsUpdateView(RetrieveUpdateAPIView):
 class NewsListView(ListAPIView):
     queryset = NewsModel.objects.all()
     serializer_class = NewsSerializer
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['user', 'slug', 'title', 'content', 'category']
 
 
 
-class NewsDeleteView(DestroyAPIView):
+class NewsDeleteView(RetrieveDestroyAPIView):
     queryset = NewsModel.objects.all()
     serializer_class = NewsSerializer
     lookup_field = 'slug'
@@ -40,7 +43,7 @@ class CategoryCreateView(CreateAPIView):
     queryset = CategoryModel.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [IsSuperUser]
-    
+
     def perform_create(self, serializer):
         serializer.save(user = self.request.user)
 
@@ -57,10 +60,12 @@ class CategoryUpdateView(RetrieveUpdateAPIView):
 class CategoryListView(ListAPIView):
     queryset = CategoryModel.objects.all()
     serializer_class = CategorySerializer
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['user', 'slug', 'title']
 
 
 
-class CategoryDeleteView(DestroyAPIView):
+class CategoryDeleteView(RetrieveDestroyAPIView):
     queryset = CategoryModel.objects.all()
     serializer_class = CategorySerializer
     lookup_field = 'slug'
@@ -87,12 +92,16 @@ class CommentUpdateView(RetrieveUpdateAPIView):
 
 
 class CommentListView(ListAPIView):
-    queryset = CommentModel.objects.all()
     serializer_class = CommentSerializer
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['id', 'user', 'comment', 'content', 'parent']
+
+    def get_queryset(self):
+        return CommentModel.objects.filter(parent = None)
 
 
 
-class CommentDeleteView(DestroyAPIView):
+class CommentDeleteView(RetrieveDestroyAPIView):
     queryset = CommentModel.objects.all()
     serializer_class = CommentSerializer
     lookup_field = 'id'
