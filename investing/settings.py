@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'news',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -55,23 +56,10 @@ WSGI_APPLICATION = 'investing.wsgi.application'
 
 
 DATABASES = {
-
     'default': {
-
-        'ENGINE': os.getenv("db_engine"),
-
-        'NAME': os.getenv("db_name"),
-
-        'USER': os.getenv("db_user"),
-
-        'PASSWORD': os.getenv("db_password"),
-
-        'HOST': os.getenv("db_host"),
-
-        'PORT': os.getenv("db_port"),
-
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
-
 }
 
 AUTH_PASSWORD_VALIDATORS = [

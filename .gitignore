@@ -1,5 +1,12 @@
+# Global
+*.pyc
+*__pycache__
 .env
-__pycache__
-media
-migrations
-.gitignore
+/static
+*.swp
+# IDE Specific (IDEA, Eclipse, Visual Code etc)
+.idea
+.settings
+.vscode
+.project
+.pydevproject

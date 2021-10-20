@@ -2,7 +2,6 @@ from rest_framework import serializers
 from news.models import CategoryModel, NewsModel, CommentModel
 
 
-
 class NewsSerializer(serializers.ModelSerializer):
 
     username = serializers.SerializerMethodField()
@@ -13,7 +12,6 @@ class NewsSerializer(serializers.ModelSerializer):
 
     def get_username(self, obj):
         return str(obj.user.username)
-
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -36,7 +34,8 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CommentModel
-        fields = ['id', 'username', 'comment', 'content', 'contentname', 'parent', 'replies']
+        fields = ['id', 'username', 'comment', 'content',
+                  'contentname', 'parent', 'replies']
 
     def validate(self, attrs):
         if(attrs['parent']):
@@ -46,7 +45,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
     def get_username(self, obj):
         return str(obj.user.username)
-    
+
     def get_contentname(self, obj):
         return str(obj.content.title)
 
